@@ -1,14 +1,18 @@
-<?php get_header(); ?>
-
+<?php get_header();?>
 <main>
-    <?php if ( have_posts() ) : ?>
-        <?php while ( have_posts() ) : the_post(); ?>
-            <a href=<?php the_permalink();?>> <?php  the_title(); ?> </a> 
-            <br>
-        <?php endwhile; ?>
-    <?php else : ?>
-        <p>Không có bài viết</p>
-    <?php endif; ?>
+<a href="<?php echo home_url() . '/projects/' ?>"
+          class="h-full flex items-center cursor-pointer text-nowrap relative">
+          <span class="menu-item-label">Projects</span>
+          <span class="menu-item-border absolute bottom-0"></span>
+        </a>
+<a href="<?php echo home_url() . '/contact/' ?>"
+          class="h-full flex items-center cursor-pointer text-nowrap relative">
+          <span class="menu-item-label">Contact us</span>
+          <span class="menu-item-border absolute bottom-0"></span>
+        </a>
+
+
+
 </main>
 
 <?php get_footer(); ?>

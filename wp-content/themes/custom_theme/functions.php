@@ -11,18 +11,18 @@ function mytheme_enqueue_assets() {
 
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_assets');
 
-add_action('init', function(){
-    register_post_type('project', [
-    'labels' => [
+function create_projects_post_type() {
+    register_post_type('projects', [
+        'labels' => [
             'name' => 'Projects',
-            'singular_name' => 'Project',
+            'singular_name' => 'Project'
         ],
         'public' => true,
-        'has_archive' => true,
+        'has_archive' => true,   // rất quan trọng
         'rewrite' => ['slug' => 'projects'],
-        'supports' => ['title', 'editor', 'thumbnail'],
-        'show_in_rest' => true, // Gutenberg
+        'show_in_rest' => true,
     ]);
-})
+}
+add_action('init', 'create_projects_post_type');
 
 ?>
