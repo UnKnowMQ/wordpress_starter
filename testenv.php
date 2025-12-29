@@ -9,12 +9,21 @@
     <?php 
 
 require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/wp-includes/class-wpdb.php';
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-echo var_dump($_ENV);
+global $wpdb;
+$name = "%quan%";
+$sql = $wpdb->prepare(
+    "SELECT * FROM {$wpdb->wp_users} WHERE user_login like %s", $name
+    
+);
+$results = $wpdb->get_results($sql);
+
+echo $results;
 
      ?>
 </body>
