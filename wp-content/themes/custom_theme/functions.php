@@ -18,11 +18,12 @@ function create_projects_post_type() {
             'singular_name' => 'Project'
         ],
         'public' => true,
-        'has_archive' => true,   // rất quan trọng
+        'has_archive' => true,  
         'rewrite' => ['slug' => 'projects'],
         'show_in_rest' => true,
     ]);
 }
 add_action('init', 'create_projects_post_type');
 
+remove_action('init', 'create_custom_table');
 ?>
