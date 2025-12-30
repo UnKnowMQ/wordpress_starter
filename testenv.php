@@ -8,23 +8,16 @@
 <body>
     <?php 
 
-require __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/wp-includes/class-wpdb.php';
-use Dotenv\Dotenv;
+require_once __DIR__ . '/wp-load.php';
+function wcec_send_email() {
+    $to      = get_option( 'admin_email' );
+    $subject = 'Báo cáo định kỳ từ website';
+    $message = 'Đây là email được gửi tự động bằng WP-Cron.';
+    $headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-global $wpdb;
-$name = "%quan%";
-$sql = $wpdb->prepare(
-    "SELECT * FROM {$wpdb->wp_users} WHERE user_login like %s", $name
-    
-);
-$results = $wpdb->get_results($sql);
-
-echo $results;
-
+    wp_mail( $to, $subject, $message, $headers );
+}
+     wcec_send_email();
      ?>
 </body>
 </html>

@@ -64,3 +64,4 @@ if (! get_role('CM')) {
 //     }
 // }
 // update_role_cap(['create_users', 'list_users', 'edit_users', 'read'], 'hr');
+

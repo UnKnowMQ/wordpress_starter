@@ -6,7 +6,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
 /**
  * The base configuration for WordPress
  *
@@ -93,10 +92,22 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define( 'WP_DEBUG', false );
+
+define('WP_DEBUG', getenv('WP_DEBUG'));
+define('WP_DEBUG_DISPLAY', getenv('WP_DEBUG_DISPLAY'));
+define('WP_DEBUG_LOG', getenv('WP_DEBUG_LOG'));
+define('SCRIPT_DEBUG', getenv('SCRIPT_DEBUG'));
 
 /* Add any custom values between this line and the "stop editing" line. */
-
+define( 'SMTP_username', 'quanbm@kaopiz.com');     // Your SMTP username
+define( 'SMTP_password', 'Quan2004@') ;       // Your SMTP password/App Password
+define( 'SMTP_server', 'smtp.office365.com');          // Your SMTP server address (e.g., smtp.gmail.com)
+define( 'SMTP_FROM', 'quanbm@kaopiz.com' );        // Email address to send from
+define( 'SMTP_NAME', 'Your Business Name' );          // Sender name
+define( 'SMTP_PORT', '587' );                         // Port number (e.g., 587 for TLS, 465 for SSL)
+define( 'SMTP_SECURE', 'tls' );                       // Security type (e.g., 'tls' or 'ssl')
+define( 'SMTP_AUTH', true );                          // Enable SMTP authentication
+define( 'SMTP_DEBUG', 0 );                            // Set to 1 or 2 for debugging info (optional)
 
 
 /* That's all, stop editing! Happy publishing. */
@@ -108,3 +119,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
+
+
