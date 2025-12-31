@@ -65,3 +65,32 @@ if (! get_role('CM')) {
 // }
 // update_role_cap(['create_users', 'list_users', 'edit_users', 'read'], 'hr');
 
+
+
+function mailer_config( $mailer ) {
+
+    if ( ! defined('SMTP_server') ) {
+        error_log( 'SMTP_server is not defined' );
+        return;
+    }
+
+    $mailer->isSMTP();
+    $mailer->Host       = SMTP_server;
+    $mailer->Port       = SMTP_PORT;
+    $mailer->SMTPAuth   = SMTP_AUTH;
+    $mailer->Username   = SMTP_username;
+    $mailer->Password   = SMTP_password;
+    $mailer->CharSet    = 'UTF-8';
+    $mailer->SMTPDebug  = ( defined('WP_DEBUG') && WP_DEBUG ) ? 2 : 0;
+    $mailer->SMTPSecure = SMTP_SECURE;
+    $mailer->From       = SMTP_FROM;
+    $mailer->FromName   = SMTP_NAME;
+}
+add_action( 'phpmailer_init', 'mailer_config', 1, 1 );
+add_action( 'wp_mail_failed', 'log_mailer_errors', 20, 1 );
+
+function log_mailer_errors( $wp_error ) {
+    error_log(
+        'Mail error: ' . implode(', ', $wp_error->get_error_messages())
+    );
+}

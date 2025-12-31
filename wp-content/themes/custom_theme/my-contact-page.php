@@ -11,30 +11,6 @@ get_header(); ?>
 $contact_errors = array();
 $contact_success = false;
 
-function mailer_config( $mailer ) {
-
-    if ( ! defined('SMTP_server') ) {
-        return;
-    }
-
-    $mailer->isSMTP();
-    $mailer->Host       = SMTP_server;
-    $mailer->Port       = SMTP_PORT;
-    $mailer->SMTPAuth   = SMTP_AUTH;
-    $mailer->Username   = SMTP_username;
-    $mailer->Password   = SMTP_password;
-    $mailer->CharSet    = 'UTF-8';
-    $mailer->SMTPDebug  = ( defined('WP_DEBUG') && WP_DEBUG ) ? 2 : 0;
-}
-add_action( 'phpmailer_init', 'mailer_config', 1, 1 );
-add_action( 'wp_mail_failed', 'log_mailer_errors', 20, 1 );
-
-function log_mailer_errors( $wp_error ) {
-    error_log(
-        'Mail error: ' . implode(', ', $wp_error->get_error_messages())
-    );
-}
-
 
 if ("POST" === $_SERVER['REQUEST_METHOD'] && isset($_POST['my_contact_nonce'])) {
     if (! wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['my_contact_nonce'])), 'my_contact_action')) {
@@ -55,12 +31,28 @@ if ("POST" === $_SERVER['REQUEST_METHOD'] && isset($_POST['my_contact_nonce'])) 
         }
 
         if (empty($contact_errors)) {
-            $to      = 'quanbm@kaopiz.com';
+            $to      = $email;
             $subject = 'Contact form: ' . get_bloginfo('name');
-            $body    = "Name: " . $name . "\n\n" . "Email: " . $email . "\n\n" . "Message:\n" . $message;
+            $body    = "Thank you for contacting us, $name.\n\nWe have received your message:\n\n$message\n\nWe will get back to you shortly.";
             $headers = array('Content-Type: text/plain; charset=UTF-8', 'From: ' . $name . ' <' . $email . '>');
 
             $sent = wp_mail($to, $subject, $body, $headers);
+
+            $wpdb->insert(
+                $wpdb->prefix . 'contact_information',
+                array(
+                    'name'      => $name,
+                    'email'     => $email,
+                    'message'   => $message,
+                    'created_at' => current_time('mysql'),
+                ),
+                array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+            );
 
             if ($sent) {
                 $contact_success = true;
