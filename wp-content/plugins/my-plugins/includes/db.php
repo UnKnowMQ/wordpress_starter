@@ -51,3 +51,20 @@ function create_custom_table2()
     dbDelta($sql);
 }
 
+function add_contact_info($name,$email,$message)
+{
+
+    global $wpdb;
+    $table_name =  $wpdb->prefix . 'contact_information';
+    $wpdb->insert($table_name,
+    array(
+        'name' => $name,
+        'email' => $email,
+        'message' => $message,
+        'created_at' => date('Y-m-d H:i:s')
+    )
+);
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+
