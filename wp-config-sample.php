@@ -91,6 +91,18 @@ define( 'WP_DEBUG', false );
 /* Add any custom values between this line and the "stop editing" line. */
 
 
+define( 'SMTP_username', 'example@gmail.com');     // Your SMTP username
+define( 'SMTP_password', 'pass app || oauth2 token') ;       // Your SMTP password/App Password
+define( 'SMTP_server', 'smtp.gmail.com');          // Your SMTP server address (e.g., smtp.gmail.com)
+define( 'SMTP_FROM', 'example@gmail.com' );        // Email address to send from
+define( 'SMTP_NAME', 'WP Starter' );          // Sender name
+define( 'SMTP_PORT', '587' );                         // Port number (e.g., 587 for TLS, 465 for SSL)
+define( 'SMTP_SECURE', 'tls' );                       // Security type (e.g., 'tls' or 'ssl')
+define( 'SMTP_AUTH', true );                          // Enable SMTP authentication
+define( 'SMTP_DEBUG', 0 );                            // Set to 1 or 2 for debugging info (optional)
+
+
+
 
 /* That's all, stop editing! Happy publishing. */
 
