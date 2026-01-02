@@ -58,24 +58,6 @@ function delete_old_posts()
 
 add_action('send_contact_email', 'send_email_task', 10, 1);
 
-// function send_email_task($data)
-// {
-//     wp_mail($data['to'], $data['subject'], $data['message']);
-// }
-
-// // Khi user submit form
-// function handle_form_submit()
-// {
-//     $data = [
-//         'to' => 'buiminhquan300304@gmail.com',
-//         'subject' => 'New contact',
-//         'message' => 'Message content',
-//     ];
-//     if (! wp_next_scheduled('send_contact_email')) {
-//         wp_schedule_event(time(), 'send_contact_email', [$data]);
-//     }
-// }
-
 
 function custom_deactivation() {
 	wp_clear_scheduled_hook( 'daily_email_event' );

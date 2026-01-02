@@ -38,6 +38,7 @@ if ("POST" === $_SERVER['REQUEST_METHOD'] && isset($_POST['my_contact_nonce'])) 
 
             $sent = wp_mail($to, $subject, $body, $headers);
 
+            global $wpdb;
             $wpdb->insert(
                 $wpdb->prefix . 'contact_information',
                 array(

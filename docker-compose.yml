@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: wp_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html/wordpress
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - wp_network
+
+  php:
+    build: .
+    container_name: wp_php
+    volumes:
+      - ./:/var/www/html/wordpress
+    networks:
+      - wp_network
+
+  mysql:
+    image: mysql:8
+    container_name: wp_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Quan2004@
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_HOST: ${DB_HOST}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wp_network
+
+networks:
+  wp_network:
+    driver: bridge
+
+volumes:
+  db_data:
