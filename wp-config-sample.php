@@ -102,6 +102,10 @@ define( 'SMTP_AUTH', true );                          // Enable SMTP authenticat
 define( 'SMTP_DEBUG', 0 );                            // Set to 1 or 2 for debugging info (optional)
 
 
+define('WP_HOME', 'http://site2.local:8080');
+define('WP_SITEURL', 'http://site2.local:8080');
+
+
 
 
 /* That's all, stop editing! Happy publishing. */
